@@ -5,11 +5,13 @@ import { Dialog } from 'primereact/dialog';
 import React from 'react';
 import * as Yup from 'yup';
 
-const CreateTask = ({ visible, onClose, onSubmit, currentTask }) => {
+//dialog box form for creating or updating a task
+const CreateUpdateTask = ({ visible, onClose, onSubmit, currentTask }) => {
+	//consider current task for update mode
 	const initialValues = !!currentTask
 		? {
 				...currentTask,
-				dueDate: epochToDateTimeLocal(currentTask.dueDate)
+				dueDate: epochToDateTimeLocal(currentTask.dueDate) // converting epoch timestamp to date-time local for input field
 		  }
 		: {
 				title: '',
@@ -83,4 +85,4 @@ const CreateTask = ({ visible, onClose, onSubmit, currentTask }) => {
 	);
 };
 
-export default CreateTask;
+export default CreateUpdateTask;

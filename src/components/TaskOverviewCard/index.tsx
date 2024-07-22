@@ -1,6 +1,7 @@
 import { Card } from 'primereact/card';
 import React from 'react';
 
+//component to show count of tasks of different status
 const TaskOverviewCard = ({ label, value, stripeClassNames }: any) => {
 	return (
 		<Card

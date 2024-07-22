@@ -13,13 +13,16 @@ import { useDispatch } from 'react-redux';
 import { TaskGridTemplate, TaskListTemplate, header } from './Components';
 import { SORT_FIELD, SORT_FIELD_OPTIONS, TASK_STATUS, TASK_STATUS_MAPPING } from './constants';
 
+// Main Tasks component
 export const Tasks: React.FunctionComponent = () => {
+	// State for layout, visibility of create/update dialog, current task, filters, and tasks
 	const [layout, setLayout] = useState<any>('list');
 	const [createTaskVisible, setCreateTaskVisible] = useState(false);
 	const [currentTask, setCurrentTask] = useState(null);
 	const [filters, setFilters] = useState(null);
 	const [tasks, setTasks] = useState<Task[]>([]);
 
+	// State for sorting
 	const [sortOrder, setSortOrder] = useState(-1);
 	const [sortField, setSortField] = useState(SORT_FIELD.DUE_DATE);
 	const sortOptions = [
@@ -31,6 +34,7 @@ export const Tasks: React.FunctionComponent = () => {
 
 	const { tasksList } = useAppSelector(state => state.tasks);
 
+	// Template for rendering tasks in list or grid layout
 	const listTemplate = (tasks, layout) => {
 		const actions = {
 			update: id => handleUpdateTask(id),
@@ -65,19 +69,23 @@ export const Tasks: React.FunctionComponent = () => {
 		});
 	};
 
+	// Load tasks from localStorage and set them in Redux store
 	const loadTasks = () => {
 		const tasks: Task[] = JSON.parse(localStorage.getItem('tasks') || '[]') || [];
 		dispatch({ type: TasksActionType.SET_TASKS, payload: { tasks } });
 	};
 
+	// Handle creating or updating a task
 	const handleCreateUpdateTask = (values: any) => {
 		if (!currentTask) {
+			//new task
 			dispatch({
 				type: TasksActionType.CREATE_TASK,
 				payload: { ...values, createdAt: Date.now(), status: TASK_STATUS.PENDING, id: tasksList.length + 1 }
 			});
 			toast('SUCCESS', 'New Task Created');
 		} else {
+			//update existing task
 			dispatch({ type: TasksActionType.UPDATE_TASK, payload: { values, id: currentTask } });
 			toast('SUCCESS', 'Task Updated');
 		}

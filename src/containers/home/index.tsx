@@ -20,6 +20,7 @@ export const Home: React.FunctionComponent = () => {
 
 	const dispatch = useDispatch();
 
+	//fetching weather on initial render using coordinates
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(position => {
