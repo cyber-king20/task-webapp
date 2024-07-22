@@ -30,4 +30,4 @@ npm start
 
 This will start the application on port 5173 (if 5173 is already in use, then 5174)
 
-Now, open `sh localhost:5173`
+Now, open `localhost:5173`
